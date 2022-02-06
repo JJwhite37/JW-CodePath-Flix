@@ -20,11 +20,23 @@ import com.example.nextflick.models.Movie;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
     Context context;
     List<Movie> movies;
+
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public MovieAdapter(Context context, List<Movie> movies) {
         this.context = context;
@@ -35,7 +47,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View movieView = LayoutInflater.from(context).inflate(R.layout.item_movie, parent, false);
-        return new ViewHolder(movieView);
+        return new ViewHolder(movieView, listener);
     }
 
     @Override
@@ -55,12 +67,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         TextView movieDescriptionView;
         ImageView moviePosterView;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, final OnItemClickListener clickListener) {
             super(itemView);
             movieDescriptionView = itemView.findViewById(R.id.movieDescriptionView);
             movieTitleView = itemView.findViewById(R.id.movieTitleView);
             moviePosterView = itemView.findViewById(R.id.moviePosterView);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickListener.onItemClick(itemView, getAdapterPosition());
+                }
+            });
         }
 
         public void bind(Movie movie) {
@@ -75,6 +93,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
             Glide.with(context)
                     .load(imageUrl)
                     .placeholder(R.drawable.flixir)
+                    .transform(new RoundedCornersTransformation(40, 0))
                     .into(moviePosterView);
         }
     }

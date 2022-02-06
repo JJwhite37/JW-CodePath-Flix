@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:transitionName="title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvReleaseDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="TextView" />
+
+    <RatingBar
+        android:id="@+id/rbMovie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="0.5" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:transitionName="description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="TextView" />
+</LinearLayout>
