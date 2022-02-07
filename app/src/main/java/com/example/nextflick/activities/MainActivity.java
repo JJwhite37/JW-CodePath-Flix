@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private movieDBClient client;
     private View movieDescriptionView;
     private View movieTitleView;
+    private  View movieImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +53,19 @@ public class MainActivity extends AppCompatActivity {
         movieAdapter.setOnItemClickListener(new MovieAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
+                movieDescriptionView = itemView.findViewById(R.id.movieDescriptionView);
+                movieTitleView = itemView.findViewById(R.id.movieTitleView);
+                movieImageView = itemView.findViewById(R.id.moviePosterView);
 
                 Intent i = new Intent(MainActivity.this, movieDetailActivity.class);
                 i.putExtra("movie", Parcels.wrap(movies.get(position)));
-                movieDescriptionView = itemView.findViewById(R.id.movieDescriptionView);
-                movieTitleView = itemView.findViewById(R.id.movieTitleView);
+
                 Pair<View, String> p1 = Pair.create(movieTitleView, "title");
                 Pair<View, String> p2 = Pair.create(movieDescriptionView, "description");
+                Pair<View, String> p3 = Pair.create(movieImageView, "trailer");
+
                 ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(MainActivity.this, p1, p2);
+                        makeSceneTransitionAnimation(MainActivity.this, p1, p2, p3);
                 startActivity(i, options.toBundle());
             }
         });

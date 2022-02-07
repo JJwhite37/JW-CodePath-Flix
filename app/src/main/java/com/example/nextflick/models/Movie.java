@@ -17,7 +17,8 @@ public class Movie {
     String movieRelease;
     Double movieRating;
     Boolean movieAdult;
-
+    int movieID = 0;
+    String movieTrailerKey;
 
     public Movie() {
     }
@@ -30,6 +31,8 @@ public class Movie {
         movieRelease = movieJsonObject.getString("release_date");
         movieRating = movieJsonObject.getDouble("vote_average");
         movieAdult = movieJsonObject.getBoolean("adult");
+        movieID = movieJsonObject.getInt("id");
+        movieTrailerKey = "";
     }
 
     public static List<Movie> resultsJsonArray(JSONArray movieJsonArray) throws JSONException {
@@ -59,4 +62,12 @@ public class Movie {
     public String getMovieRelease() { return movieRelease; }
 
     public Double getMovieRating() { return movieRating; }
+
+    public Boolean getMovieAdult() { return movieAdult; }
+
+    public Integer getMovieID() { return movieID; }
+
+    public String getMovieTrailerKey() { return movieTrailerKey; }
+
+    public void setMovieTrailerKey(String movieTrailerKey) { this.movieTrailerKey = movieTrailerKey; }
 }
