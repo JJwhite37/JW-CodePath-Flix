@@ -8,7 +8,6 @@
 
     <ImageView
         android:id="@+id/moviePosterView"
-        android:transitionName="trailer"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -17,6 +16,7 @@
         android:layout_marginTop="6dp"
         android:layout_marginBottom="5dp"
         android:tintMode="src_atop"
+        android:transitionName="trailer"
         app:tint="#41052347"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -33,8 +33,8 @@
         android:layout_toEndOf="@+id/moviePosterView"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:textColor="#25C1D3"
-        android:textSize="22dp"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/title_font"
         android:textStyle="bold"
         android:typeface="normal"
         tools:text="Suicide Squad" />
@@ -53,8 +53,8 @@
         android:layout_marginBottom="7dp"
         android:layout_toEndOf="@+id/moviePosterView"
         android:textAlignment="textStart"
-        android:textColor="#787F8A"
-        android:textSize="15dp"
+        android:textColor="@color/textSecondary"
+        android:textSize="@dimen/text_font"
         android:textStyle="normal"
         android:typeface="serif"
         tools:text="From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences." />

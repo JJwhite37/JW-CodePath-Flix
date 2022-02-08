@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private View movieTitleView;
     private  View movieImageView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,5 +97,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MainActivity", "Request failed");
             }
         });
+
     }
 }

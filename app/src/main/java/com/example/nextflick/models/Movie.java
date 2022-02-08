@@ -20,10 +20,13 @@ public class Movie {
     int movieID = 0;
     String movieTrailerKey;
 
+    int genreID = 0;
+
     public Movie() {
     }
 
     public Movie(JSONObject movieJsonObject) throws JSONException {
+        JSONArray genreIDArray;
         moviePosterPath = movieJsonObject.getString("poster_path");
         movieBackdropPath = movieJsonObject.getString("backdrop_path");
         movieTitle = movieJsonObject.getString("title");
@@ -33,6 +36,8 @@ public class Movie {
         movieAdult = movieJsonObject.getBoolean("adult");
         movieID = movieJsonObject.getInt("id");
         movieTrailerKey = "";
+        genreIDArray = movieJsonObject.getJSONArray("genre_ids");
+        genreID = genreIDArray.getInt(0);
     }
 
     public static List<Movie> resultsJsonArray(JSONArray movieJsonArray) throws JSONException {
@@ -70,4 +75,6 @@ public class Movie {
     public String getMovieTrailerKey() { return movieTrailerKey; }
 
     public void setMovieTrailerKey(String movieTrailerKey) { this.movieTrailerKey = movieTrailerKey; }
+
+    public int getGenreID() { return genreID; }
 }

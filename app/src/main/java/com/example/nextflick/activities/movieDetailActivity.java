@@ -1,6 +1,7 @@
 package com.example.nextflick.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -32,10 +33,14 @@ public class movieDetailActivity extends AppCompatActivity {
     private TextView movieDescriptionView;
     private TextView movieTitleView;
     private TextView movieRelease;
+    private TextView movieAdult;
+    private TextView movieGenre;
     private RatingBar movieRating;
     private ImageView movieTrailerImage;
     public String videoRequest;
     private movieDBClient client;
+    public String genreRequest;
+    private movieDBClient genreClient;
     String movieTrailerKey;
 
     @Override
@@ -48,6 +53,8 @@ public class movieDetailActivity extends AppCompatActivity {
         movieRelease = findViewById(R.id.tvReleaseDate);
         movieRating = findViewById(R.id.rbMovie);
         movieTrailerImage = findViewById(R.id.ivMovieTrailer);
+        movieAdult = findViewById(R.id.tvAdult);
+        movieGenre = findViewById(R.id.tvGenre);
 
         Movie movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra("movie"));
         String mDescription = movie.getMovieOverview();
@@ -58,6 +65,43 @@ public class movieDetailActivity extends AppCompatActivity {
         movieTitleView.setText(mTitle);
         movieRelease.setText(mRelease);
         movieRating.setRating(mRating.floatValue() / 2.0f);
+
+        if(movie.getMovieAdult() == true) {
+            movieAdult.setText("Movie Contains Adult only Content");
+            movieAdult.setTextColor(Color.parseColor("#ff0000"));
+        } else {
+            movieAdult.setText("Movie Does not contain Adult only Content");
+            movieAdult.setTextColor(Color.parseColor("#00ff00"));
+        }
+
+        genreRequest = "https://api.themoviedb.org/3/genre/movie/list?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+        genreClient = new movieDBClient();
+        genreClient.getMovieInfo(genreRequest, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d("movieDetailActivity", "Request was successful");
+                JSONObject jsonObject = json.jsonObject;
+
+                try {
+                    JSONArray genreResults = jsonObject.getJSONArray("genres");
+                    int genreNum = movie.getGenreID();
+                    for(int i = 0; i < genreResults.length(); i++){
+                        JSONObject arrayID = genreResults.getJSONObject(i);
+                        if( genreNum == arrayID.getInt("id") ) {
+                            movieGenre.setText(" - " + arrayID.getString("name"));
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("movieDetailActivity", "exception trying to get genre");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d("movieDetailActivity", "Request failed");
+            }
+        });
 
         Glide.with(movieDetailActivity.this)
                 .load(movie.getMovieBackdropPath())
